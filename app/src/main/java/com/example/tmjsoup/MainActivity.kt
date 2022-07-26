@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             var document = Document(null)
 
             try {
-                document = Jsoup.connect("https://www.transfermarkt.com/giannis-maniatis/profil/spieler/25721").get()
+                document = Jsoup.connect("https://www.transfermarkt.com/brandon-thomas/profil/spieler/251680").get()
             } catch (e: IOException){
                 Log.i("TAG","Error")
             }
@@ -47,7 +47,16 @@ class MainActivity : AppCompatActivity() {
                     flag = false
                     continue
                 }
-                Log.i("TAG", "${element.text()}\n${element.attr("a")}")
+                Log.i("TAG", "${element.text()}")
+            }
+
+            elements = document.getElementsByClass("tm-player-transfer-history-grid__club-link")
+            flag = false
+            for(element in elements){
+                flag = !flag
+                if(flag)
+                    continue
+                Log.i("TAG", "https://www.transfermarkt.com${element.attr("href")}")
             }
 
             elements = document.select("img[src]")
